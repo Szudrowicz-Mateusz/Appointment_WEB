@@ -30,7 +30,27 @@
                     @for (var day = 0; day <= 6; day++)
                     {
 
-                        <th></th>
+                        <td>
+                            @if (true)
+                            {
+                                
+                                var appointment = Model.FirstOrDefault(a =>
+                                a.day == (Day)day &&
+                                a.startTime <= new TimeSpan(hour,0,0) && a.endTime > new TimeSpan(hour,0,0)
+                                );
+
+                                <div class="appointment-cell">
+                                    @if (appointment != null)
+                                    {
+                                        <div class="appointment">
+                                            <div>@appointment.title</div>
+                                            <div>@appointment.description</div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+
+                        </td>
                     }
                 </tr>
             }
