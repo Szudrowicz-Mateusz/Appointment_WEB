@@ -1,5 +1,13 @@
 ﻿@model List<Appointment_WEB.Models.AppointmentModel>
 
+<style>
+    table,tr,td,th{
+        border: dotted;
+        border-color: red;
+        padding: 1em;
+    }
+</style>
+
 <div class="table-container">
     <table class="appointments-table">
         <thead>
@@ -21,38 +29,8 @@
                     <th>@hour:00 AM</th>
                     @for (var day = 0; day <= 6; day++)
                     {
-                        var time = new DateTime(1, 1, 1, hour, 0, 0).TimeOfDay;
-                        <td>
-                            @if (hour % 2 == 0)
-                            {
-                                var cellTime = new DateTime(1, 1, 1, hour, 0, 0).TimeOfDay;
-                                var appointment = Model.FirstOrDefault(a =>
-                                a.day == (Day)day &&
-                                a.startTime <= cellTime && a.endTime > cellTime
-                                );
 
-                                <div class="appointment-cell">
-                                    @if (appointment != null)
-                                    {
-                                        var duration = (appointment.endTime - appointment.startTime).TotalMinutes;
-                                        var position = (cellTime - appointment.startTime).TotalMinutes;
-                                        var fontSize = Math.Max(12, Math.Min(16, (int)(12 + duration / 60))); // Adjust font size
-
-                                        <div class="appointment" style="width: @(duration / 60 * 100)%; margin-left: @(position / 60 * 100)%; font-size: @(fontSize)px;">
-                                            <div>@appointment.title</div>
-                                            <div>@appointment.description</div>
-                                        </div>
-                                    }
-                                </div>
-                            }
-                            else
-                            {
-                                var quarterHour = new TimeSpan(0, 15, 0);
-                                var cellTime = time.Add(quarterHour);
-
-                                <div class="quarter-hour-cell"></div>
-                            }
-                        </td>
+                        <th></th>
                     }
                 </tr>
             }
@@ -69,5 +47,4 @@
     <p>@app.day</p>
     <p>@app.startTime</p>
     <p>@app.endTime</p>
-    <p></p>
 }
