@@ -1,5 +1,40 @@
 ﻿@model List<Appointment_WEB.Models.AppointmentModel>
 
+<style>
+    .table-container {
+        overflow-x: auto;
+        max-width: 100%;
+    }
+
+    .appointments-table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        .appointments-table th, .appointments-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+    .appointment {
+        color: #fff;
+        border-radius: 4px;
+        padding: 5px;
+        background: linear-gradient(to bottom, #007bff, #0056b3); /* Example gradient from blue to a darker blue */
+    }
+
+    .title {
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+
+    .description{
+        font-size: 0.8em;
+    }
+
+</style>
+
 <div class="table-container">
     <table class="appointments-table">
         <thead>
@@ -21,37 +56,27 @@
                     <th>@hour:00 AM</th>
                     @for (var day = 0; day <= 6; day++)
                     {
-                        var time = new DateTime(1, 1, 1, hour, 0, 0).TimeOfDay;
+
                         <td>
-                            @if (hour % 2 == 0)
+                            @if (true)
                             {
-                                var cellTime = new DateTime(1, 1, 1, hour, 0, 0).TimeOfDay;
+                                
                                 var appointment = Model.FirstOrDefault(a =>
                                 a.day == (Day)day &&
-                                a.startTime <= cellTime && a.endTime > cellTime
+                                a.startTime <= new TimeSpan(hour,0,0) && a.endTime > new TimeSpan(hour,0,0)
                                 );
 
                                 <div class="appointment-cell">
                                     @if (appointment != null)
                                     {
-                                        var duration = (appointment.endTime - appointment.startTime).TotalMinutes;
-                                        var position = (cellTime - appointment.startTime).TotalMinutes;
-                                        var fontSize = Math.Max(12, Math.Min(16, (int)(12 + duration / 60))); // Adjust font size
-
-                                        <div class="appointment" style="width: @(duration / 60 * 100)%; margin-left: @(position / 60 * 100)%; font-size: @(fontSize)px;">
-                                            <div>@appointment.title</div>
-                                            <div>@appointment.description</div>
+                                        <div class="appointment">
+                                            <div class="title">@appointment.title</div>
+                                            <div class="description">@appointment.description</div>
                                         </div>
                                     }
                                 </div>
                             }
-                            else
-                            {
-                                var quarterHour = new TimeSpan(0, 15, 0);
-                                var cellTime = time.Add(quarterHour);
 
-                                <div class="quarter-hour-cell"></div>
-                            }
                         </td>
                     }
                 </tr>
@@ -59,13 +84,3 @@
         </tbody>
     </table>
 </div>
-
-
-@foreach(var app in Model)
-{
-    <p>@app.title</p>
-    <p>@app.description</p>
-    <p>@app.day</p>
-    <p>@app.startTime</p>
-    <p>@app.endTime</p>
-}

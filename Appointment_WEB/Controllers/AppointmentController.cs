@@ -1,23 +1,24 @@
 ﻿using Appointment_WEB.Models;
+using Appointment_WEB.Services.Interfaces;
+using Appointment_WEB.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Appointment_WEB.Controllers
 {
     public class AppointmentController : Controller
     {
-        private List<AppointmentModel> appointments = new List<AppointmentModel>();
+        private readonly IAppointmentService _appointmentService;
+
+        public AppointmentController(IAppointmentService appointmentService)
+        {
+            _appointmentService = appointmentService;
+        }
 
         public IActionResult Show()
         {
+            var appointments = _appointmentService.GetAll();
 
-            // Dummy data
-            var dummyAppointments = new List<AppointmentModel>
-              {
-                new AppointmentModel(1, "Title1", "Desc1", Day.Thursday, new TimeSpan(10, 0, 0), new TimeSpan(12, 0, 0)),
-                new AppointmentModel(2, "Title2", "Desc2", Day.Monday, new TimeSpan(8, 0, 0), new TimeSpan(15, 0, 0))
-            };
-
-            return View(dummyAppointments);
+            return View(appointments);
         }
 
 
@@ -32,10 +33,8 @@ namespace Appointment_WEB.Controllers
         {
             if (ModelState.IsValid)
             {
-                
-                appointments.Add(model);
+                _appointmentService.Save(model); 
 
-                
                 return RedirectToAction("Show");
             }
             return View(model);
