@@ -32,6 +32,12 @@
         .container.form-container .text-danger {
             color: #dc3545;
         }
+
+    .alert-warning{
+        color:red;
+        margin-top:1em;
+    }
+
 </style>
 <div class="container form-container"
     <h2>Add Appointment</h2>
@@ -61,14 +67,22 @@
         </div>
         <div class="form-group">
             <label asp-for="startTime" class="control-label">Start Time</label>
-            <input asp-for="startTime" type="time" class="form-control" step="60" />
+            <input asp-for="startTime" type="time" class="form-control" step="3600" />
             <span asp-validation-for="startTime" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="endTime" class="control-label">End Time</label>
-            <input asp-for="endTime" type="time" class="form-control" step="60" />
+            <input asp-for="endTime" type="time" class="form-control" step="3600" />
             <span asp-validation-for="endTime" class="text-danger"></span>
         </div>
         <button type="submit" class="btn btn-primary">Add Appointment</button>
     </form>
+
+    @if (!string.IsNullOrEmpty(ViewData["WarningMessage"] as string))
+    {
+            <div class="alert alert-warning">
+            @ViewData["WarningMessage"]
+            </div>
+    }
+
 </div>
