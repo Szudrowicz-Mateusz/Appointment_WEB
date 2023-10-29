@@ -1,11 +1,38 @@
 ﻿@model List<Appointment_WEB.Models.AppointmentModel>
 
 <style>
-    table,tr,td,th{
-        border: dotted;
-        border-color: red;
-        padding: 1em;
+    .table-container {
+        overflow-x: auto;
+        max-width: 100%;
     }
+
+    .appointments-table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        .appointments-table th, .appointments-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+    .appointment {
+        color: #fff;
+        border-radius: 4px;
+        padding: 5px;
+        background: linear-gradient(to bottom, #007bff, #0056b3); /* Example gradient from blue to a darker blue */
+    }
+
+    .title {
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+
+    .description{
+        font-size: 0.8em;
+    }
+
 </style>
 
 <div class="table-container">
@@ -43,8 +70,8 @@
                                     @if (appointment != null)
                                     {
                                         <div class="appointment">
-                                            <div>@appointment.title</div>
-                                            <div>@appointment.description</div>
+                                            <div class="title">@appointment.title</div>
+                                            <div class="description">@appointment.description</div>
                                         </div>
                                     }
                                 </div>
@@ -57,14 +84,3 @@
         </tbody>
     </table>
 </div>
-
-<!-- Check dummy data -->
-
-@foreach(var app in Model)
-{
-    <p>@app.title</p>
-    <p>@app.description</p>
-    <p>@app.day</p>
-    <p>@app.startTime</p>
-    <p>@app.endTime</p>
-}
