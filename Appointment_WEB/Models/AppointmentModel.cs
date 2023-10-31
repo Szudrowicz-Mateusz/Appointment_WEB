@@ -59,7 +59,7 @@ namespace Appointment_WEB.Models
         [MaxLength(20)] // I don'y use ErrorMessage couse my form didn't allow you to make more then MaxLength
         public String title { get; set; }
         [Required]
-        [MaxLength(30)] 
+        [MaxLength(50)] 
         public string description { get; set; }
         [Required]
         public Day day { get; set; }
