@@ -31,14 +31,52 @@ namespace Appointment_WEB.Controllers
         [HttpPost]
         public IActionResult Add(AppointmentModel model)
         {
+
+
             if (ModelState.IsValid)
             {
-                _appointmentService.Save(model); 
+                List<AppointmentModel> ap = _appointmentService.GetAll();
+
+                // Check for overlapping appointments
+                bool isOverlapping = ap.Any(a =>
+                    a.day == model.day &&
+                    model.startTime < a.endTime && model.endTime > a.startTime);
+
+                if (isOverlapping)
+                {
+                    ViewData["WarningMessage"] = "The new appointment overlaps with an existing appointment.";
+                    return View(model);
+                }
+
+                _appointmentService.Save(model);
 
                 return RedirectToAction("Show");
             }
-            return View(model);
+
+            return View(model); // If the model is not valid, return to the AddAppointments view with validation errors.
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id) 
+        {
+            _appointmentService.Delete(id);
+            return RedirectToAction("Show");
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, string title, string description) 
+        {
+            _appointmentService.Edit(id, title, description);
+            return RedirectToAction("Show");
         }
     }
-
 }
+    
+
+

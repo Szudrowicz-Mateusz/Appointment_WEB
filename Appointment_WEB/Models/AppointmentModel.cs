@@ -22,6 +22,28 @@ namespace Appointment_WEB.Models
         }
     }
 
+    public class RangeTimeOfAppointments : ValidationAttribute 
+    {
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            var appointment = (AppointmentModel)validationContext.ObjectInstance;
+
+            var earlier = new TimeSpan(7, 59, 0);
+            var later = new TimeSpan(20, 1, 0);
+
+            if(appointment.startTime<= earlier || appointment.startTime >= later)
+            {
+                return new ValidationResult("Start time must be between 8AM to 8PM");
+            }
+            else if(appointment.endTime <= earlier || appointment.endTime >= later)
+            {
+                return new ValidationResult("End time must be between 8AM to 8PM");
+            }
+
+            return ValidationResult.Success;
+        }
+    }
+
 
     public class AppointmentModel
     {
@@ -34,8 +56,10 @@ namespace Appointment_WEB.Models
         [Key]
         public int id { get; set; }
         [Required]
+        [MaxLength(20)] // I don'y use ErrorMessage couse my form didn't allow you to make more then MaxLength
         public String title { get; set; }
         [Required]
+        [MaxLength(50)] 
         public string description { get; set; }
         [Required]
         public Day day { get; set; }
@@ -47,6 +71,7 @@ namespace Appointment_WEB.Models
 
         [Required]
         [DataType(DataType.Time)]
+        [RangeTimeOfAppointments]
         public TimeSpan endTime { get; set; }
     }
 }
