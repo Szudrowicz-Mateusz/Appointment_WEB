@@ -33,21 +33,33 @@ namespace Appointment_WEB.Services
 
         public int Delete(int id)
         {
-            var appointemnt = _context.Appointments.Find(id);
-            _context.Appointments.Remove(appointemnt);
+            var appointment = _context.Appointments.Find(id);
+            _context.Appointments.Remove(appointment);
 
             if(_context.SaveChanges()>0)
             {
                 System.Console.WriteLine("Success");
             }
+            else
+            {
+                System.Console.WriteLine("Failure");
+            }
 
             return id;
         }
 
-        public int Edit(int id)
+        public int Edit(int id, string title, string description)
         {
-            // To be done
-            return 0;
+            var appointment = _context.Appointments.Find(id);
+            if (appointment != null)
+            {
+                appointment.title = title;
+                appointment.description = description;
+                _context.SaveChanges();
+                return id;
+            }
+            return -1; // Return a value to indicate that the update was unsuccessful
         }
+
     }
 }

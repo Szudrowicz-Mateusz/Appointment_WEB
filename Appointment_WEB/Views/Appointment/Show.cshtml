@@ -75,6 +75,12 @@
         text-align:center;
     }
 
+    .button-container {
+        display: flex; /* Display the buttons in a row */
+        gap: 0.2em; /* Add spacing between the buttons */
+        justify-content: center; /* Adjust alignment to the right */
+    }
+
     .editButton {
         background-color:grey;
     }
@@ -142,26 +148,35 @@
     </table>
 </div>
 
+ <!-- The Assinemnt when we click on him -->
 <div id="newDivContainer" class="hidden">
     <div class="new-div">
         <h3 id="title"></h3>
         <p id="description"></p>
-        @using (Html.BeginForm("Delete", "Appointment", FormMethod.Post))
-        {
-            <input type="hidden" name="Id" id="appointmentId"/>
-            <button class="deleteButton" type="submit">Delete</button>
-        }
+        <div class="button-container">
+
+            @Html.ActionLink("Edit", "Edit", "Appointment", new { id = "appointmentId" }, new { @class = "editButton" })
+
+            @using (Html.BeginForm("Delete", "Appointment", FormMethod.Post))
+            {
+                @Html.Hidden("Id", null, new { id = "appointmentId" }) <!-- Hidden input field for appointment ID -->
+                <button class="deleteButton" type="submit">Delete</button>
+            }
+        </div>
     </div>
 </div>
 
+
 <script>
+
     const newDivContainer = document.getElementById('newDivContainer');
     const titleElement = document.getElementById('title');
     const descriptionElement = document.getElementById('description');
     const appointmentIdElement = document.getElementById('appointmentId');
 
     document.querySelectorAll('.appointment').forEach(appointmentDiv => {
-        appointmentDiv.addEventListener('click', function () {
+        appointmentDiv.addEventListener('click', function () 
+
             // Get appointment details from the appointment div
             const title = appointmentDiv.querySelector('.title').textContent;
             const description = appointmentDiv.querySelector('.description').textContent;

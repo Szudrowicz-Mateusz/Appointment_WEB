@@ -62,6 +62,19 @@ namespace Appointment_WEB.Controllers
             _appointmentService.Delete(id);
             return RedirectToAction("Show");
         }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, string title, string description) 
+        {
+            _appointmentService.Edit(id, title, description);
+            return RedirectToAction("Show");
+        }
     }
 }
     

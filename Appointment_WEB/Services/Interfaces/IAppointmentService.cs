@@ -6,7 +6,7 @@ namespace Appointment_WEB.Services.Interfaces
     {
         int Save(AppointmentModel model);
         List<AppointmentModel> GetAll();
-        int Edit(int id);
+        int Edit(int id, string title, string description);
         int Delete(int id);
     }
 }
