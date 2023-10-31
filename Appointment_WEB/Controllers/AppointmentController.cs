@@ -55,6 +55,13 @@ namespace Appointment_WEB.Controllers
 
             return View(model); // If the model is not valid, return to the AddAppointments view with validation errors.
         }
+
+        [HttpPost]
+        public IActionResult Delete(int id) 
+        {
+            _appointmentService.Delete(id);
+            return RedirectToAction("Show");
+        }
     }
 }
     

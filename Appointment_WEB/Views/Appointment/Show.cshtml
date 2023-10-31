@@ -169,6 +169,7 @@
             newButtonDelete.classList.add('deleteButton');
             newButtonDelete.textContent = 'Delete';
 
+
             // Append the buttons to the new div
             newDiv.appendChild(newButtonEdit);
             newDiv.appendChild(newButtonDelete);
@@ -183,4 +184,12 @@
             event.stopPropagation(); // Prevent click event from propagating to the document
         });
     });
+
+    const deleteButton = document.querySelector('.deleteButton');
+
+    if (deleteButton) {
+        deleteButton.addEventListener('click', function () {
+            console.log("Delete");
+        });
+    }
 </script>

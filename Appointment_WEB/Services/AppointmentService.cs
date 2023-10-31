@@ -30,5 +30,24 @@ namespace Appointment_WEB.Services
 
             return appointments;
         }
+
+        public int Delete(int id)
+        {
+            var appointemnt = _context.Appointments.Find(id);
+            _context.Appointments.Remove(appointemnt);
+
+            if(_context.SaveChanges()>0)
+            {
+                System.Console.WriteLine("Success");
+            }
+
+            return id;
+        }
+
+        public int Edit(int id)
+        {
+            // To be done
+            return 0;
+        }
     }
 }
