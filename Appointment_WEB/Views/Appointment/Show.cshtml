@@ -81,17 +81,21 @@
         justify-content: center; /* Adjust alignment to the right */
     }
 
+
+
     .editButton {
-        background-color:grey;
+        background-color:darkgrey;
+        border:1px solid black;
+        width:4em;
     }
     .editButton:hover{
-        background-color:darkgrey;
+        background-color:grey;
     }
 
     .deleteButton {
         background-color:red;
     }
-    .deleteButton{
+    .deleteButton:hover{
         background-color:darkred;
     }
 
@@ -154,6 +158,7 @@
         <h3 id="title"></h3>
         <p id="description"></p>
         <div class="button-container">
+            <a class="editButton">Edit</a>
 
             @using (Html.BeginForm("Delete", "Appointment", FormMethod.Post))
             {
@@ -165,8 +170,7 @@
 </div>
 
 
-<script>
-
+<script type="text/javascript">
     const newDivContainer = document.getElementById('newDivContainer');
     const titleElement = document.getElementById('title');
     const descriptionElement = document.getElementById('description');
@@ -186,6 +190,10 @@
 
             // Show the newDivContainer
             newDivContainer.style.display = 'block';
+
+            // Set the "Edit" button's href with the appointmentId as a query parameter
+            const editButton = document.querySelector('.editButton');
+            editButton.href = `/Appointment/Edit?id=${appointmentId}`;
         });
     });
 
@@ -195,5 +203,4 @@
             newDivContainer.style.display = 'none';
         }
     });
-
 </script>
