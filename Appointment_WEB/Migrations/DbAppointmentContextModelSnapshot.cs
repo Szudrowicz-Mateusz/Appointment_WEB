@@ -49,7 +49,7 @@ namespace Appointment_WEB.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Appointments");
+                    b.ToTable("Appointments", (string)null);
                 });
 #pragma warning restore 612, 618
         }

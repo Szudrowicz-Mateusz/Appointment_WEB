@@ -2,9 +2,11 @@
 using Appointment_WEB.Services.Interfaces;
 using Appointment_WEB.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Appointment_WEB.Controllers
 {
+    [Authorize]
     public class AppointmentController : Controller
     {
         private readonly IAppointmentService _appointmentService;
