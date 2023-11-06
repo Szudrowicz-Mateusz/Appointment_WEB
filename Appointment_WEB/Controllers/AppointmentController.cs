@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Appointment_WEB.Controllers
 {
-    [Authorize]
+    
     public class AppointmentController : Controller
     {
         private readonly IAppointmentService _appointmentService;
