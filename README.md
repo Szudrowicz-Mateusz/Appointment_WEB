@@ -10,7 +10,7 @@ Clone this repo -> Open it in VS2022 -> Click Tools on Tool Bar -> From the drop
 
 
 
-## Appointments can be added edited or removed.
+## Appointments can be added,edited or removed.
 
 ![image](https://github.com/Szudrowicz-Mateusz/Appointment_WEB/assets/103212278/f334cdab-ec55-4f9d-85bf-25586decbffb)
 
