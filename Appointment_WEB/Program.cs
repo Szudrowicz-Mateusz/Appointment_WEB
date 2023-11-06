@@ -13,7 +13,7 @@ builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 
 builder.Services.AddDbContext<DbAppointmentContext>(builder =>
 {
-    builder.UseSqlServer(@"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=DbTest;Integrated Security=True");
+    builder.UseSqlServer(@"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=AppointmentDb;Integrated Security=True");
 });
 
 builder.Services.AddIdentity<UserModel, IdentityRole>(options =>

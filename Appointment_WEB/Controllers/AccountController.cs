@@ -28,7 +28,7 @@ namespace Appointment_WEB.Controllers
                 return View(userLoginData);
             }
 
-            await _signInManager.PasswordSignInAsync(userLoginData.Name, userLoginData.Password, false, false);
+            await _signInManager.PasswordSignInAsync(userLoginData.Name, userLoginData.Password,false,false);
 
             return RedirectToAction("Show", "Appointment");
         }
