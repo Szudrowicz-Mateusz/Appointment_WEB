@@ -3,6 +3,8 @@ using Appointment_WEB.Services.Interfaces;
 using Appointment_WEB.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Appointment_WEB.Email.Interfaces;
 
 namespace Appointment_WEB.Controllers
 {
@@ -10,10 +12,14 @@ namespace Appointment_WEB.Controllers
     public class AppointmentController : Controller
     {
         private readonly IAppointmentService _appointmentService;
+        private readonly IEmailSender _emailSender;
+        private readonly UserManager<UserModel> _userManager;
 
-        public AppointmentController(IAppointmentService appointmentService)
+        public AppointmentController(IAppointmentService appointmentService,IEmailSender emailSender, UserManager<UserModel> userManager)
         {
             _appointmentService = appointmentService;
+            _emailSender = emailSender;
+            _userManager = userManager;
         }
 
         public IActionResult Show()
@@ -31,10 +37,8 @@ namespace Appointment_WEB.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(AppointmentModel model)
+        public async Task<IActionResult> Add(AppointmentModel model)
         {
-
-
             if (ModelState.IsValid)
             {
                 List<AppointmentModel> ap = _appointmentService.GetAll();
@@ -50,12 +54,27 @@ namespace Appointment_WEB.Controllers
                     return View(model);
                 }
 
+                // Get the currently logged-in user's email
+                var user = await _userManager.GetUserAsync(User);
+                if (user != null)
+                {
+                    string userEmail = user.Email;
+                    string subject = "You have created a new appointment";
+                    string message = $"Hello, \nyou created a new appointment on next {model.day}, called {model.title} starting at {model.startTime} and ending on {model.endTime}." +
+                        $"\nThanks for you time and wish you great meeting ";
+
+                     await _emailSender.SendEmailAsync(userEmail, subject, message);
+                    
+                    Console.WriteLine(subject);
+                    
+                }
+
                 _appointmentService.Save(model);
 
                 return RedirectToAction("Show");
             }
 
-            return View(model); // If the model is not valid, return to the AddAppointments view with validation errors.
+            return View(model);
         }
 
         [HttpPost]

@@ -4,18 +4,25 @@ using Appointment_WEB.Services;
 using Appointment_WEB.Services.Interfaces;
 using Appointment_WEB.Models;
 using Microsoft.AspNetCore.Identity;
+using Appointment_WEB.Email;
+using Appointment_WEB.Email.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Dependecy injections
+builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 
+// Creating DB
 builder.Services.AddDbContext<DbAppointmentContext>(builder =>
 {
     builder.UseSqlServer(@"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=AppointmentDb;Integrated Security=True");
 });
 
+// Password settings
 builder.Services.AddIdentity<UserModel, IdentityRole>(options =>
 {
     options.Password.RequireDigit = false;
@@ -40,7 +47,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthentication();
+app.UseAuthentication(); // Needed for authentication
 app.UseAuthorization();
 
 app.MapControllerRoute(
