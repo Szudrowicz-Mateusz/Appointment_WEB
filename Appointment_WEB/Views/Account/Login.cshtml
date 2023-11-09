@@ -2,7 +2,8 @@
 
 <style>
 .login {
-    width: 300px;
+    width: 30em;
+    height:25em;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
@@ -78,6 +79,11 @@
 
         @Html.LabelFor(x => x.Password, "Password:")
         @Html.PasswordFor(x => x.Password)
+
+        <div style="display: flex; align-items: center;">
+            <p style="margin-right: 10px;">You don't have an account on our website?</p>
+            <a href="./Register">Here you can Register.</a>
+        </div>
 
         <button type="submit">Login</button>
     </div>
