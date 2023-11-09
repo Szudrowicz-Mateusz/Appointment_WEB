@@ -71,7 +71,7 @@ namespace Appointment_WEB.Controllers
             {
                 return View(user);
             }
-            return View(); // Handle the case where the user is not found or not logged in.
+            return RedirectToAction("Login"); // Handle the case where the user is not found or not logged in.
         }
 
         [HttpGet]

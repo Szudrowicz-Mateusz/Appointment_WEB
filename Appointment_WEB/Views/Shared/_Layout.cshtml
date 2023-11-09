@@ -18,15 +18,16 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-
+                    <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Appointment" asp-action="Add">AddAppointemnt</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Appointment" asp-action="Add">Add Appointment</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Appointment" asp-action="Show">ShowAppointemnt</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Appointment" asp-action="Show">Show Appointment</a>
                         </li>
-
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <!-- 'ms-auto' pushes the items to the right -->
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
@@ -42,12 +43,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
                             </li>
                         }
-
-
-                    </ul>
-                    <ul class="navbar-nav">
-                        <!-- This is a new ul for the icon -->
-                        <li class="nav-item-icon">
+                        <li class="nav-item">
                             <a class="navbar-icon" asp-area="" asp-controller="Account" asp-action="ShowFullProfile">
                                 <img id="person-icon" src="~/images/PersonIcon.png" />
                             </a>
