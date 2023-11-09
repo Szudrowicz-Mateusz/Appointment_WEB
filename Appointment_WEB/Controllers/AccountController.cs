@@ -28,7 +28,7 @@ namespace Appointment_WEB.Controllers
                 return View(userLoginData);
             }
 
-            await _signInManager.PasswordSignInAsync(userLoginData.Name, userLoginData.Password, false, false);
+            await _signInManager.PasswordSignInAsync(userLoginData.Name, userLoginData.Password,false,false);
 
             return RedirectToAction("Show", "Appointment");
         }
@@ -62,5 +62,57 @@ namespace Appointment_WEB.Controllers
 
             return RedirectToAction("Login");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ShowFullProfile()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                return View(user);
+            }
+            return RedirectToAction("Login"); // Handle the case where the user is not found or not logged in.
+        }
+
+        [HttpGet]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordModel userNewPassword)
+        {
+            if (!ModelState.IsValid || userNewPassword.NewPassword != userNewPassword.RepeatNewPassword)
+            {
+                ModelState.AddModelError(string.Empty, "Failed to change password. Please check your current password and try again.");
+                return View(userNewPassword);
+            }
+
+            // Get the currently logged-in user
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user != null)
+            {
+                // Change the user's password
+                var result = await _userManager.ChangePasswordAsync(user, userNewPassword.OldPassword, userNewPassword.NewPassword);
+
+                if (result.Succeeded)
+                {
+                    // Redirect to logout or another action
+                    return RedirectToAction("LogOut");
+                }
+                else
+                {
+                    // Handle password change failure
+                    ModelState.AddModelError(string.Empty, "Failed to change password.");
+                    return View(userNewPassword);
+                }
+            }
+
+            // Redirect to login or another action
+            return RedirectToAction("Login");
+        }
+
     }
 }

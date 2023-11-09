@@ -4,6 +4,7 @@ using Appointment_WEB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Appointment_WEB.Migrations
 {
     [DbContext(typeof(DbAppointmentContext))]
-    partial class DbAppointmentContextModelSnapshot : ModelSnapshot
+    [Migration("20231106111434_Add_everything")]
+    partial class Add_everything
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -1,0 +1,91 @@
+﻿@model Appointment_WEB.Models.UserModel
+
+<h1>User Profile</h1>
+
+<style>
+    .main-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        margin: 20px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        max-width: 40em;
+    }
+
+    .profile-photo img {
+        width: 20em;
+        height: 20em;
+        border-radius: 50%;
+    }
+
+    .user-details {
+        margin-left: 0.8em;
+    }
+
+        .user-details h6 {
+            font-size: 1.2em;
+            color: #333;
+            margin: 0;
+        }
+
+        .user-details p {
+            font-size: 1.4em;
+            margin: 0;
+        }
+
+    .button {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin: 10px;
+    }
+
+    #changePasswordBtn {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+        #changePasswordBtn:hover {
+            background-color: #0056b3;
+        }
+</style>
+
+<div class="main-container">
+    <div class="profile-photo">
+        <img src="~/images/PersonIcon.png" />
+    </div>
+    <div class="user-details">
+        <div class="username">
+            <h6>Username</h6>
+            <p>@Model.UserName</p>
+        </div>
+        <div class="email">
+            <h6>Email</h6>
+            <p>@Model.Email</p>
+        </div>
+        <div id="phone-number">
+            <h6>Phone number</h6>
+            <p>@Model.PhoneNumber</p>
+        </div>
+    </div>
+    <div class="button">
+        <button type="submit" id="changePasswordBtn">Change Password</button>
+    </div>
+</div>
+
+<script>
+    const button = document.getElementById("changePasswordBtn");
+
+    button.addEventListener('click', function () {
+        // Redirect to the ChangePassword action with the ChangePasswordModel
+        window.location.href = '/Account/ChangePassword';
+    })
+</script>

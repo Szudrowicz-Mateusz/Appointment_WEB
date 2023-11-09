@@ -2,7 +2,8 @@
 
 <style>
 .login {
-    width: 300px;
+    width: 30em;
+    height:25em;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
@@ -45,12 +46,30 @@
 .login button:hover {
     background-color: #0056b3;
 }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+        .alert-danger ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .alert-danger li {
+            margin-bottom: 5px;
+        }
 </style>
 
 
 @using (Html.BeginForm("Login", "Account", FormMethod.Post))
 {
-    @Html.ValidationSummary();
 
     <div class="login">
         <h2>Login</h2>
@@ -61,6 +80,18 @@
         @Html.LabelFor(x => x.Password, "Password:")
         @Html.PasswordFor(x => x.Password)
 
+        <div style="display: flex; align-items: center;">
+            <p style="margin-right: 10px;">You don't have an account on our website?</p>
+            <a href="./Register">Here you can Register.</a>
+        </div>
+
         <button type="submit">Login</button>
+    </div>
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger mt-3">
+        @Html.ValidationSummary()
     </div>
 }
