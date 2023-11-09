@@ -45,14 +45,31 @@
             .register button:hover {
                 background-color: #0056b3;
             }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+        .alert-danger ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .alert-danger li {
+            margin-bottom: 5px;
+        }
 </style>
 
 
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post))
 {
-    @Html.ValidationSummary()
-    ;
 
     <div class="register">
         <h2>Register</h2>
@@ -70,5 +87,12 @@
         @Html.PasswordFor(x => x.Password)
 
         <button type="submit">Register</button>
+    </div>
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger mt-3">
+        @Html.ValidationSummary()
     </div>
 }
