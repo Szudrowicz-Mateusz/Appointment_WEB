@@ -1,6 +1,6 @@
 # C# .NET ASP (MVC) site with MSSQL Appointment Project
 
-## A fully functional site written in C#,HTML,JS,CSS it's mainly created for learning purposes.
+## A fully functional site written in C#, HTML, JS, CSS it's mainly created for learning purposes.
 
 This is my project that helped me understand MVC model with some features like: adding,editing and removing appointments from DB also logging to account that get you access to look into your profile and change your password.
 
