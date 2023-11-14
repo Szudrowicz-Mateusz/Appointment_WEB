@@ -10,9 +10,8 @@ This is my project that helped me understand MVC model with some features like: 
 * Modifying data about your account
 
 ## This is how it should look like
-![The main view of our site](https://github.com/Szudrowicz-Mateusz/Appointment_WEB/assets/103212278/8a55f7be-7529-4e51-96aa-190a4723feb3){:height="200px"}
-![When you click on the appointment]https://github.com/Szudrowicz-Mateusz/Appointment_WEB/assets/103212278/f334cdab-ec55-4f9d-85bf-25586decbffb){:height="200px"}
-![The Add Appointment view](https://github.com/Szudrowicz-Mateusz/Appointment_WEB/assets/103212278/2f205060-62c8-4c71-b913-060b9c86b872){:height="200px"}
+![image](https://github.com/Szudrowicz-Mateusz/Appointment_WEB/assets/103212278/7956c2e5-8161-4455-bad1-c2e0cea1a74c)
+
 
 ## How to install this project
 
