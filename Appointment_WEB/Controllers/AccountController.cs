@@ -125,18 +125,15 @@ namespace Appointment_WEB.Controllers
 
                 if (result.Succeeded)
                 {
-                    // Redirect to logout or another action
                     return RedirectToAction("LogOut");
                 }
                 else
                 {
-                    // Handle password change failure
                     ModelState.AddModelError(string.Empty, "Failed to change password.");
                     return View(userNewPassword);
                 }
             }
 
-            // Redirect to login or another action
             return RedirectToAction("Login");
         }
 
@@ -148,25 +145,47 @@ namespace Appointment_WEB.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadFile(BufferedSingleFileUploadDb fileModel)
         {
-            if (ModelState.IsValid)
+            // First four if is checking for wrong formats etc.
+
+            if (!ModelState.IsValid)
+                return View(fileModel);
+
+            if (fileModel == null)
             {
-                // Get the currently logged-in user
-                var user = await _userManager.GetUserAsync(User);
-
-                if (user != null)
-                {
-                    // Convert IFormFile to byte array
-                    user.UserProfileImage = ConvertToByteArray(fileModel.FormFile);
-
-                    // Update the user in the database
-                    await _userManager.UpdateAsync(user);
-
-                    // Redirect to profile or another action
-                    return RedirectToAction("ShowFullProfile");
-                }
+                ModelState.AddModelError("File", "Please select a file.");
+                return View(fileModel);
             }
 
-            // If something goes wrong, return to the upload form
+            // Check if the file has an allowed extension
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
+            var fileExtension = Path.GetExtension(fileModel.FormFile.FileName).ToLower();
+
+            if (!allowedExtensions.Contains(fileExtension))
+            {
+                ModelState.AddModelError("File", "Only .jpg, .jpeg, and .png file types are allowed.");
+                return View(fileModel);
+            }
+
+            // Check if the file size is within the allowed limit (3MB)
+            if (fileModel.FormFile.Length > 3145728)// 3MB in bytes
+            {
+                ModelState.AddModelError("File", "The file size exceeds the allowed limit (3MB).");
+                return View(fileModel);
+            }
+
+
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user != null)
+            {
+                user.UserProfileImage = ConvertToByteArray(fileModel.FormFile);
+
+                await _userManager.UpdateAsync(user);
+
+                return RedirectToAction("ShowFullProfile");
+            }
+
+
             return View(fileModel);
         }
 

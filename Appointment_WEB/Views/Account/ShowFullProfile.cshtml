@@ -70,6 +70,10 @@
         {
             <img src="~/images/PersonIcon.png" />
         }
+
+        <div>
+            <button type="submit" id="changeProfilePhoto">Change Profile Photo</button>
+        </div>
     </div>
     <div class="user-details">
         <div class="username">
@@ -91,10 +95,17 @@
 </div>
 
 <script>
-    const button = document.getElementById("changePasswordBtn");
+    const buttonChangePassword = document.getElementById("changePasswordBtn");
 
-    button.addEventListener('click', function () {
+    buttonChangePassword.addEventListener('click', function () {
         // Redirect to the ChangePassword action with the ChangePasswordModel
         window.location.href = '/Account/ChangePassword';
     })
+
+    const buttonChangeProfilePhoto = document.getElementById("changeProfilePhoto");
+
+    buttonChangeProfilePhoto.addEventListener('click', function () {
+        window.location.href = '/Account/UploadFile';
+    })
+
 </script>
