@@ -8,11 +8,13 @@ namespace Appointment_WEB.Controllers
     {
         private readonly UserManager<UserModel> _userManager;
         private readonly SignInManager<UserModel> _signInManager;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public AccountController(UserManager<UserModel> userManager, SignInManager<UserModel> signInManager)
+        public AccountController(UserManager<UserModel> userManager, SignInManager<UserModel> signInManager, IWebHostEnvironment webHostEnvironment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet]
@@ -33,28 +35,52 @@ namespace Appointment_WEB.Controllers
             return RedirectToAction("Show", "Appointment");
         }
 
+        private byte[] ConvertToByteArray(IFormFile file)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                file.CopyTo(memoryStream);
+                return memoryStream.ToArray();
+            }
+        }
+
+
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Register(Register userRegisterData) 
+        public async Task<IActionResult> Register(Register userRegisterData, IFormFile profileImage = null)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(userRegisterData);
             }
 
-            await _userManager.CreateAsync(new UserModel
+            var user = new UserModel
             {
                 Email = userRegisterData.Email,
                 UserName = userRegisterData.Name,
-                PhoneNumber = userRegisterData.Phone
-            }, userRegisterData.Password);
+                PhoneNumber = userRegisterData.Phone,
+                // Set the user's profile image or use a default image
+                UserProfileImage = profileImage != null ? ConvertToByteArray(profileImage) : GetDefaultProfileImage()
+            };
+
+            await _userManager.CreateAsync(user, userRegisterData.Password);
 
             return RedirectToAction("Login");
         }
+
+        private byte[] GetDefaultProfileImage()
+        {
+            // Load the default profile image from the project
+            var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "PersonIcon.png");
+
+            // Convert the image to a byte array
+            return System.IO.File.ReadAllBytes(imagePath);
+        }
+
 
         public async Task<IActionResult> LogOut()
         {
@@ -112,6 +138,36 @@ namespace Appointment_WEB.Controllers
 
             // Redirect to login or another action
             return RedirectToAction("Login");
+        }
+
+        [HttpGet]
+        public IActionResult UploadFile()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> UploadFile(BufferedSingleFileUploadDb fileModel)
+        {
+            if (ModelState.IsValid)
+            {
+                // Get the currently logged-in user
+                var user = await _userManager.GetUserAsync(User);
+
+                if (user != null)
+                {
+                    // Convert IFormFile to byte array
+                    user.UserProfileImage = ConvertToByteArray(fileModel.FormFile);
+
+                    // Update the user in the database
+                    await _userManager.UpdateAsync(user);
+
+                    // Redirect to profile or another action
+                    return RedirectToAction("ShowFullProfile");
+                }
+            }
+
+            // If something goes wrong, return to the upload form
+            return View(fileModel);
         }
 
     }

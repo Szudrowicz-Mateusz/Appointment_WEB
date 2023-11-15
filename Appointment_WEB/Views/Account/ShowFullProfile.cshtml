@@ -58,9 +58,18 @@
         }
 </style>
 
+
 <div class="main-container">
     <div class="profile-photo">
-        <img src="~/images/PersonIcon.png" />
+        @if (Model.UserProfileImage != null && Model.UserProfileImage.Length > 0)
+        {
+            var base64Image = Convert.ToBase64String(Model.UserProfileImage);
+            <img src="data:image/png;base64, @base64Image" />
+        }
+        else
+        {
+            <img src="~/images/PersonIcon.png" />
+        }
     </div>
     <div class="user-details">
         <div class="username">
