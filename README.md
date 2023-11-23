@@ -9,6 +9,7 @@ This is my project that helped me understand MVC model with some features like: 
 * Register, Login, Logout and checking data about your account
 * Modifying data about your account
 * Sending email about adding appointments
+* Adding you own profile picture up to 3MB
 
 ## This is how it should look like
 ![image](https://github.com/Szudrowicz-Mateusz/Appointment_WEB/assets/103212278/7956c2e5-8161-4455-bad1-c2e0cea1a74c)
