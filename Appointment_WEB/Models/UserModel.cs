@@ -8,5 +8,6 @@ namespace Appointment_WEB.Models
 {
     public class UserModel : IdentityUser
     {
+        public byte[] UserProfileImage { get; set; }
     }
 }

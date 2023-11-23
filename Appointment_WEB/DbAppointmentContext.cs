@@ -8,6 +8,8 @@ namespace Appointment_WEB
     {
         public DbSet<AppointmentModel> Appointments {get; set;}
 
+        public DbSet<AppFile> File { get; set; }
+
         public DbAppointmentContext(DbContextOptions options) : base(options) { }
     }
 }

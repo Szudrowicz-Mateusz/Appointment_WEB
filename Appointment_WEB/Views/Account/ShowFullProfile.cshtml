@@ -58,9 +58,22 @@
         }
 </style>
 
+
 <div class="main-container">
     <div class="profile-photo">
-        <img src="~/images/PersonIcon.png" />
+        @if (Model.UserProfileImage != null && Model.UserProfileImage.Length > 0)
+        {
+            var base64Image = Convert.ToBase64String(Model.UserProfileImage);
+            <img src="data:image/png;base64, @base64Image" />
+        }
+        else
+        {
+            <img src="~/images/PersonIcon.png" />
+        }
+
+        <div>
+            <button type="submit" id="changeProfilePhoto">Change Profile Photo</button>
+        </div>
     </div>
     <div class="user-details">
         <div class="username">
@@ -82,10 +95,17 @@
 </div>
 
 <script>
-    const button = document.getElementById("changePasswordBtn");
+    const buttonChangePassword = document.getElementById("changePasswordBtn");
 
-    button.addEventListener('click', function () {
+    buttonChangePassword.addEventListener('click', function () {
         // Redirect to the ChangePassword action with the ChangePasswordModel
         window.location.href = '/Account/ChangePassword';
     })
+
+    const buttonChangeProfilePhoto = document.getElementById("changeProfilePhoto");
+
+    buttonChangeProfilePhoto.addEventListener('click', function () {
+        window.location.href = '/Account/UploadFile';
+    })
+
 </script>
